@@ -1,0 +1,68 @@
+!
+hostname CE-B
+!
+
+no ip domain lookup
+ip domain name lab.local
+!
+enable secret cisco
+username cisco privilege 15 secret cisco
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+ip cef
+!
+
+interface Loopback0
+ description Router-ID / BGP RID
+ ip address 2.2.2.2 255.255.255.255
+!
+interface GigabitEthernet0/0
+ description eBGP to PE1 (AS65000) BACKUP
+ ip address 192.168.23.1 255.255.255.252
+ duplex auto
+ speed auto
+ media-type rj45
+ no shutdown
+!
+
+interface GigabitEthernet0/1
+ description eBGP to PE2 (AS65000) PRIMARY
+ ip address 192.168.24.1 255.255.255.252
+ duplex auto
+ speed auto
+ media-type rj45
+ no shutdown
+!
+
+interface GigabitEthernet0/2
+ description Site-B user LAN 10.2.2.0/24
+ ip address 10.2.2.1 255.255.255.0
+ duplex auto
+ speed auto
+ media-type rj45
+ no shutdown
+!
+
+router bgp 65002
+ bgp router-id 2.2.2.2
+ bgp log-neighbor-changes
+ network 10.2.2.0 mask 255.255.255.0
+ neighbor 192.168.23.2 remote-as 65000
+ neighbor 192.168.23.2 description PE1-backup
+ neighbor 192.168.23.2 weight 100
+ neighbor 192.168.24.2 remote-as 65000
+ neighbor 192.168.24.2 description PE2-primary
+ neighbor 192.168.24.2 weight 200
+!
+
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+line vty 0 4
+ login local
+ transport input telnet ssh
+!
+end

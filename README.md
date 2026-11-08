@@ -10,7 +10,8 @@ Lab manuals are written in **English** and **日本語** (Japanese). See each la
 
 | Lab / ラボ | Topic / 内容 | Languages / 言語 | Import file / インポート |
 | --- | --- | --- | --- |
-| [YANG / NETCONF / RESTCONF](labs/yang-netconf/README.md) | Model-driven management on IOS-XE (`csr1000v`), OSPF underlay, curl & `ncclient` examples | **EN + JA** | [`labs/yang-netconf/yang-netconf-restconf.yaml`](labs/yang-netconf/yang-netconf-restconf.yaml) |
+| [YANG / NETCONF / RESTCONF](labs/yang-netconf/README.md) | Model-driven management on IOS-XE (`csr1000v`), OSPF underlay, curl & `ncclient` | **EN + JA** | [`yang-netconf-restconf.yaml`](labs/yang-netconf/yang-netconf-restconf.yaml) |
+| [BGP / iBGP / OSPF 冗長](labs/bgp-redundant/README.md) | Dual-homed eBGP, ISP core OSPF + iBGP, end-to-end PC traffic （**P ルータの役割**も解説） | **EN + JA** | [`bgp-ibgp-ospf-redundant.yaml`](labs/bgp-redundant/bgp-ibgp-ospf-redundant.yaml) |
 
 ## Common usage / 使い方（共通）
 
@@ -20,9 +21,14 @@ Lab manuals are written in **English** and **日本語** (Japanese). See each la
 
 Default credentials / 初期アカウント: `cisco` / `cisco`
 
-### YANG lab notes / YANG ラボ補足
+### Which lab first? / どれから？
 
-- Needs IOS-XE with YANG: prefer `csr1000v` (or `cat8000v` / IOL-XE). **`iosv` is not enough.**  
-  YANG 対応の IOS-XE が必要です。`csr1000v`（または `cat8000v` / IOL-XE）を推奨。**`iosv` では不足**します。  
-- Client examples: [`labs/yang-netconf/scripts/`](labs/yang-netconf/scripts/)  
-- Full bilingual manual: [`labs/yang-netconf/README.md`](labs/yang-netconf/README.md)
+| If you want… / 目的 | Start here / こちら |
+| --- | --- |
+| Understand CE / PE / **P**, eBGP, iBGP, OSPF redundancy | [BGP lab](labs/bgp-redundant/README.md) — see **Why is there a P router?** |
+| Learn YANG / NETCONF / RESTCONF APIs | [YANG lab](labs/yang-netconf/README.md) |
+
+### Notes / 補足
+
+- **YANG lab**: needs IOS-XE with YANG (`csr1000v` / `cat8000v` / IOL-XE). **`iosv` is not enough.**  
+- **BGP lab**: uses `iosv` / `alpine` / `unmanaged_switch` (swap IOS image if needed).

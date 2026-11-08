@@ -16,6 +16,36 @@
 
 ## English
 
+### Beginner overview — the big picture
+
+This lab is **not** an ISP CE/PE/P design. There is **no P router** here.
+
+| Lab | What it teaches | Core devices |
+| --- | --- | --- |
+| **This YANG lab** | How to manage routers with YANG APIs | R1, R2, MGMT-PC |
+| [BGP redundant lab](../bgp-redundant/README.md) | CE / PE / **P**, eBGP, iBGP, OSPF failover | CE, PE1, PE2, **P**, PCs |
+
+If you came here wondering **“Why do we need a P router?”**, that question belongs to the BGP lab — see its section **Why is there a P router?**
+
+What each box does in *this* lab:
+
+```text
+  You (operator)
+       |
+       v
+   MGMT-PC  ----(mgmt LAN)----  R1  ----(OSPF link)----  R2
+   curl /                      APIs on                 APIs on
+   ncclient                    172.16.0.1              172.16.0.2
+```
+
+| Device | Beginner meaning |
+| --- | --- |
+| **R1 / R2** | Two routers you will manage. They run OSPF between them so there is “real” config and state to read. |
+| **SW-MGMT** | A simple switch so MGMT-PC, R1, and R2 share one management LAN. |
+| **MGMT-PC** | Your client PC inside the lab (Alpine). From here you call NETCONF/RESTCONF. |
+
+Think of it as: **CLI practice → replace parts of CLI with YANG-based tools.**
+
 ### What you will learn
 
 This lab builds a small CML2 environment for **model-driven network management**:
@@ -213,6 +243,36 @@ Compare with `show ip interface brief` — same truth, different encoding.
 ---
 
 ## 日本語
+
+### 初心者向け — 全体像
+
+このラボは ISP の CE / PE / **P** 構成ではありません。**P ルータは出てきません。**
+
+| ラボ | 学ぶこと | 主な装置 |
+| --- | --- | --- |
+| **この YANG ラボ** | YANG API でルータを操作する方法 | R1, R2, MGMT-PC |
+| [BGP 冗長ラボ](../bgp-redundant/README.md) | CE / PE / **P**、eBGP、iBGP、OSPF 障害迂回 | CE, PE1, PE2, **P**, PC |
+
+**「P ルータはなぜ必要？」** が知りたい場合は、BGP ラボの **「なぜ P ルータが必要なのか？」** を読んでください。
+
+このラボの各装置の意味:
+
+```text
+  あなた（操作する人）
+       |
+       v
+   MGMT-PC  ----(管理 LAN)----  R1  ----(OSPF リンク)----  R2
+   curl /                     API は                  API は
+   ncclient                   172.16.0.1              172.16.0.2
+```
+
+| 装置 | 初心者向けの意味 |
+| --- | --- |
+| **R1 / R2** | 管理対象のルータ 2 台。OSPF を張って「読む・変える」対象の設定と状態を作る |
+| **SW-MGMT** | MGMT-PC と R1 / R2 を同じ管理 LAN につなぐだけのスイッチ |
+| **MGMT-PC** | ラボ内の操作用 PC（Alpine）。ここから NETCONF / RESTCONF を叩く |
+
+イメージは **「CLI でやっていた操作の一部を、YANG ベースの道具に置き換える」** です。
 
 ### このラボで学ぶこと
 
