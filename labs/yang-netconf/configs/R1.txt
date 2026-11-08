@@ -1,0 +1,67 @@
+!
+hostname R1
+!
+
+no ip domain lookup
+ip domain name lab.local
+!
+aaa new-model
+!
+aaa authentication login default local
+aaa authorization exec default local
+!
+enable secret cisco
+username cisco privilege 15 secret cisco
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+ip cef
+!
+crypto key generate rsa general-keys modulus 2048
+!
+ip ssh version 2
+!
+netconf-yang
+restconf
+ip http authentication local
+ip http server
+ip http secure-server
+!
+
+interface Loopback0
+ description YANG-lab RID R1
+ ip address 1.1.1.1 255.255.255.255
+!
+interface GigabitEthernet1
+ description MGMT LAN to SW-MGMT / MGMT-PC
+ ip address 172.16.0.1 255.255.255.0
+ no shutdown
+!
+
+interface GigabitEthernet2
+ description OSPF to R2
+ ip address 10.0.12.1 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf hello-interval 5
+ ip ospf dead-interval 20
+ no shutdown
+!
+
+router ospf 1
+ router-id 1.1.1.1
+ passive-interface default
+ no passive-interface GigabitEthernet2
+ network 1.1.1.1 0.0.0.0 area 0
+ network 10.0.12.0 0.0.0.3 area 0
+!
+
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+line vty 0 4
+ login local
+ transport input ssh
+!
+end
