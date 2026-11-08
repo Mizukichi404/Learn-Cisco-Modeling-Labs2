@@ -121,6 +121,7 @@ python3 labs/bgp-redundant/build_lab.py
 ```
 
 ### Topology (detail)
+## トポロジ
 
 ```text
  AS 65001 Site-A                         AS 65000 ISP Core                      AS 65002 Site-B
